@@ -7,7 +7,14 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var guitarRouter = require('./routes/guitar');
+var gridRouter = require('./routes/grid');
 var app = express();
+app.get('/grid', (req, res) => {
+  let query = req.query;
+  console.log(`Rows: ${query.rows}`);
+  console.log(`Cols: ${query.cols}`);
+  res.render('grid', { title: 'Grid Display', query: query });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/guitar', guitarRouter);
+app.use('/grid', gridRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
